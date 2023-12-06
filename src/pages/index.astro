@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+
+const projectEntries = await getCollection('projects');
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+
+		<section id="greeter">
+			<div class="hero min-h-screen bg-base-200">
+				<div class="hero-content text-center">
+					<div class="max-w-md">
+						<h2 class="text-4xl font-normal">Hello, I'm</h2>
+						<h1 class="text-5xl font-bold">xela</h1>
+						<p class="py-6">A software development enthusiast from Sweden.</p>
+						<a href="#projects"><button class="btn btn-outline btn-sm">Projects</button></a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="projects" class="mx-auto w-fit h-screen flex flex-col">
+			<h2 class="text-4xl font-semibold text-center pt-20 pb-24">My Projects</h2>
+
+			<div class="container mx-auto w-fit">
+				<div class="flex gap-4 justify-center flex-wrap">
+					{projectEntries.map(projectEntry => (
+						<div class="card card-compact w-96 bg-slate-800 shadow-xl">
+							<div class="card-body">
+								<h2 class="card-title">
+									{projectEntry.data.title}
+								</h2>
+								<div class="inline-flex -my-2 mb-2">
+									{projectEntry.data.tags.map(projectTag => (
+										<div class="badge badge-primary mr-2">{projectTag}</div>
+									))}
+								</div>
+								<p>{projectEntry.data.description}</p>
+								<div class="card-actions mt-1 justify-end">
+									{projectEntry.data.github_url && (
+										<a href={projectEntry.data.github_url}><button class="btn btn-outline btn-sm">GitHub</button></a>
+									)}
+									{projectEntry.data.other_url && (
+										<a href={projectEntry.data.other_url}><button class="btn btn-outline btn-sm">Read More</button></a>
+									)}
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+	</body>
+</html>
