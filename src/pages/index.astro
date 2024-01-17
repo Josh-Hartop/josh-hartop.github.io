@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-
 const projectEntries = await getCollection('projects');
+
+import ProjectCard from '../components/ProjectCard.astro';
 ---
 
 <html lang="en">
@@ -33,27 +34,14 @@ const projectEntries = await getCollection('projects');
 			<div class="container mx-auto w-fit">
 				<div class="flex gap-4 justify-center flex-wrap">
 					{projectEntries.map(projectEntry => (
-						<div class="card card-compact w-96 bg-slate-800 shadow-xl">
-							<div class="card-body">
-								<h2 class="card-title">
-									{projectEntry.data.title}
-								</h2>
-								<div class="inline-flex -my-2 mb-2">
-									{projectEntry.data.tags.map(projectTag => (
-										<div class="badge badge-primary mr-2">{projectTag}</div>
-									))}
-								</div>
-								<p>{projectEntry.data.description}</p>
-								<div class="card-actions mt-1 justify-end">
-									{projectEntry.data.github_url && (
-										<a href={projectEntry.data.github_url} target=_blank><button class="btn btn-outline btn-sm">GitHub</button></a>
-									)}
-									{projectEntry.data.other_url && (
-										<a href={projectEntry.data.other_url} target=_blank><button class="btn btn-outline btn-sm">Read More</button></a>
-									)}
-								</div>
-							</div>
-						</div>
+						<ProjectCard
+							title={projectEntry.data.title}
+							tags={projectEntry.data.tags}
+							description={projectEntry.data.description}
+							github_url={projectEntry.data.github_url}
+							github_release_filename={projectEntry.data.github_release_filename}
+							other_url={projectEntry.data.other_url}
+						/>
 					))}
 				</div>
 			</div>

@@ -1,0 +1,25 @@
+---
+const { title, tags, description, github_url, other_url } = Astro.props;
+---
+
+<div class="card card-compact w-96 bg-slate-800 shadow-xl">
+    <div class="card-body">
+        <h2 class="card-title">
+            {title}
+        </h2>
+        <div class="inline-flex -my-2 mb-2">
+            {tags.map(projectTag => (
+                <div class="badge badge-primary mr-2">{projectTag}</div>
+            ))}
+        </div>
+        <p>{description}</p>
+        <div class="card-actions mt-1 justify-end">
+            {github_url && (
+                <a href={github_url} target=_blank><button class="btn btn-outline btn-sm">GitHub</button></a>
+            )}
+            {other_url && (
+                <a href={other_url} target=_blank><button class="btn btn-outline btn-sm">Read More</button></a>
+            )}
+        </div>
+    </div>
+</div>
