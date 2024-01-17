@@ -46,10 +46,10 @@ const projectEntries = await getCollection('projects');
 								<p>{projectEntry.data.description}</p>
 								<div class="card-actions mt-1 justify-end">
 									{projectEntry.data.github_url && (
-										<a href={projectEntry.data.github_url}><button class="btn btn-outline btn-sm">GitHub</button></a>
+										<a href={projectEntry.data.github_url} target=_blank><button class="btn btn-outline btn-sm">GitHub</button></a>
 									)}
 									{projectEntry.data.other_url && (
-										<a href={projectEntry.data.other_url}><button class="btn btn-outline btn-sm">Read More</button></a>
+										<a href={projectEntry.data.other_url} target=_blank><button class="btn btn-outline btn-sm">Read More</button></a>
 									)}
 								</div>
 							</div>
