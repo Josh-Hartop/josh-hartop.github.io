@@ -1,4 +1,12 @@
 ---
+interface Props {
+    title: string,
+    tags?: string[],
+    description: string,
+    github_url?: string,
+    other_url?: string
+}
+
 const { title, tags, description, github_url, other_url } = Astro.props;
 ---
 
@@ -8,7 +16,7 @@ const { title, tags, description, github_url, other_url } = Astro.props;
             {title}
         </h2>
         <div class="inline-flex -my-2 mb-2">
-            {tags.map(projectTag => (
+            {tags && tags.map(projectTag => (
                 <div class="badge badge-primary mr-2">{projectTag}</div>
             ))}
         </div>
