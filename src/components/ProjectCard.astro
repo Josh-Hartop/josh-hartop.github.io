@@ -1,13 +1,25 @@
 ---
+import { getOutputFileNames } from 'typescript';
+
 interface Props {
     title: string,
     tags?: string[],
     description: string,
     github_url?: string,
+    github_release_filenames?: Array<string>,
     other_url?: string
 }
 
-const { title, tags, description, github_url, other_url } = Astro.props;
+const { title, tags, description, github_url, github_release_filenames, other_url } = Astro.props;
+
+var github_release_links: Array<{url: string, filename: string}> = new Array();
+
+github_release_filenames?.forEach(element => {
+    github_release_links.push({
+        filename: element,
+        url: github_url?.replace(/\/$/, "") + "/releases/latest/download/" + element
+    });
+});
 ---
 
 <div class="card card-compact w-96 bg-slate-800 shadow-xl">
@@ -22,11 +34,29 @@ const { title, tags, description, github_url, other_url } = Astro.props;
         </div>
         <p>{description}</p>
         <div class="card-actions mt-1 justify-end">
-            {github_url && (
-                <a href={github_url} target=_blank><button class="btn btn-outline btn-sm">GitHub</button></a>
-            )}
             {other_url && (
-                <a href={other_url} target=_blank><button class="btn btn-outline btn-sm">Read More</button></a>
+                <a href={other_url} target=_blank><button class="btn btn-outline btn-sm">
+                    <img src="link-icon.svg" class="h-6 w-6" />
+                </button></a>
+            )}
+            {github_url && (
+                <a href={github_url} target=_blank>
+                    <button class="btn btn-outline btn-sm">
+                        <img src="github-icon.svg" class="h-6 w-6" />
+                    </button>
+                </a>
+            )}
+            {github_release_filenames && (
+                <div class="dropdown dropdown-bottom">
+                    <div tabindex="0" role="button" class="btn btn-outline btn-sm">
+                        <img src="file-download-icon.svg" class="h-6 w-6" />
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-300 rounded-box w-52">
+                        {github_release_links.map(release => (
+                            <li><a href={release.url}>{release.filename}</a></li>
+                        ))}
+                    </ul>
+                </div>
             )}
         </div>
     </div>
